@@ -3,19 +3,48 @@ import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
 import styles from "../../styles/styles.js"
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
+import axios from "axios";
+// import baseUrl from "../../baseUrl.js"
 
 
 
 const Signup = () => {
 const [email,setEmail]= useState("");
-const [fullName,setFullName]= useState("");
+const [name,setName]= useState("");
 const [password,setPassword]= useState("");
 const [visible,setVisible]= useState(false);
 const [avatar, setAvatar] = useState(null);
 
-const handleFileInputChange = ()=>{
+const baseUrl = "http://localhost:3000";
+const handleFileInputChange = (e)=>{
+  const file = e.target.files[0];
+  setAvatar(file);
 
 } 
+const handleSubmit = async(e)=>{
+  e.preventDefault();
+ try{
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+  const formData = new FormData();
+  formData.append('email', email);
+  formData.append('name', name);
+  formData.append('password', password);
+  formData.append('file', avatar);
+  // console.log(formData);
+ await axios.post(`${baseUrl}/api/v2/user/create-user`, formData,config).then((res)=>{
+    console.log(res);
+    
+  })
+
+ }catch(err){
+  console.log(err);
+
+ }
+}
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -26,12 +55,12 @@ const handleFileInputChange = ()=>{
         </div>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="full-name">Full Name</label>
                 <div className="mt-1">
-                  <input type="text" name="full-name" autoComplete="name" required value={fullName} 
-                  onChange={(e)=>setFullName(e.target.value) } className="apperance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  <input type="text" name="full-name" autoComplete="name" required value={name} 
+                  onChange={(e)=>setName(e.target.value) } className="apperance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
               <div>
