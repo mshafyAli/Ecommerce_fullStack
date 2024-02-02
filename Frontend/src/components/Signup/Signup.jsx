@@ -4,7 +4,8 @@ import styles from "../../styles/styles.js"
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
-// import baseUrl from "../../baseUrl.js"
+import baseUrl from "../../baseUrl.js"
+import { toast } from "react-toastify";
 
 
 
@@ -15,7 +16,6 @@ const [password,setPassword]= useState("");
 const [visible,setVisible]= useState(false);
 const [avatar, setAvatar] = useState(null);
 
-const baseUrl = "http://localhost:3000";
 const handleFileInputChange = (e)=>{
   const file = e.target.files[0];
   setAvatar(file);
@@ -35,15 +35,26 @@ const handleSubmit = async(e)=>{
   formData.append('password', password);
   formData.append('file', avatar);
   // console.log(formData);
- await axios.post(`${baseUrl}/api/v2/user/create-user`, formData,config).then((res)=>{
+ await axios.post(`${baseUrl}/user/create-user`, formData,config).then((res)=>{
+  toast.success(res.data.message);
+    setEmail("");
+    setName("");
+    setPassword("");
+    setAvatar();
     console.log(res);
     
   })
 
- }catch(err){
-  console.log(err);
-
- }
+ }catch(error) {
+  if (error.response && error.response.status === 400) {
+    // Handle specific error scenario (user already exists)
+    toast.error("User already exists. Please use a different email.");
+  } else {
+    // Generic error handling
+    toast.error("An error occurred. Please try again later.");
+    console.error(error);
+  }
+}
 }
 
   return (
