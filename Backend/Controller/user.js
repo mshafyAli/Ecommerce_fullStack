@@ -8,6 +8,10 @@ import jwt from "jsonwebtoken";
 import sendMail from "../Utills/sendMail.js";
 import catchAsyncError from "../Middleware/catchAsyncError.js";
 import sendToken from "../Utills/jwtTokens.js";
+import { isAuthenticatedUser } from "../Middleware/auth.js";
+
+
+
 
 const router = express.Router();
 
@@ -104,6 +108,62 @@ router.post(
     }
   })
 );
+
+
+//login Routes
+
+router.post("/login-user",catchAsyncError(async(req,res,next)=>{
+
+  try{
+    const {email, password} = req.body;
+    if(!email || !password){
+      return next(new errorHandler("Please enter email and password", 400));
+    }
+    const user = await User.findOne({email}).select("+password");
+    if(!user){
+      return next(new errorHandler("User not found", 400));
+    }
+    const isPasswordValid = await user.comparePassword(password);
+    if(!isPasswordValid){
+      return next(new errorHandler("please provide the correct Information", 400));
+    }
+    
+    sendToken(user, 200, res);
+  }catch(err){
+
+    return next(new errorHandler(err.message), 500);
+
+  }
+  
+
+
+})
+);
+
+router.post("/get-user",isAuthenticatedUser,catchAsyncError(async()=>{
+  
+  try{
+
+    const user = await User.findById(req.user.id);
+
+    if(!user){
+      return next(new errorHandler("User not found", 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      user
+    })
+
+
+
+  }catch(err){
+    return next(new errorHandler(err.message), 500);
+
+  }
+
+
+}))
 
 export default router;
 

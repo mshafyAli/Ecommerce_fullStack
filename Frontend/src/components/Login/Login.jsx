@@ -1,14 +1,46 @@
 import {React,useState} from "react";
 import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/ai";
 import styles from "../../styles/styles.js"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import baseUrl from "../../baseUrl.js";
+import { toast } from "react-toastify";
 
 
 
 const Login = () => {
+const navigate = useNavigate();
 const [email,setEmail]= useState("");
 const [password,setPassword]= useState("");
 const [visible,setVisible]= useState(false);
+
+
+const handleSubmit = async(e) => {
+  e.preventDefault();
+
+try{
+  await axios.post(`${baseUrl}/user/login-user`,{
+  email,
+  password,
+},{withCredentials:true}).then((res)=>{
+  toast.success("Login Successfully");
+  navigate("/");
+  console.log(res);
+  
+})
+
+}catch(error){
+  if(error.response.status === 400){
+    toast.error("Invalid email or password");
+  }else{
+    toast.error("Login Failed");
+  }
+  console.log(error);
+
+}
+
+
+}
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -19,7 +51,7 @@ const [visible,setVisible]= useState(false);
         </div>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email">Email Address</label>
                 <div className="mt-1">

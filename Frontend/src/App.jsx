@@ -1,7 +1,9 @@
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useEffect } from 'react';
+import axios from 'axios';
+import baseUrl from './baseUrl.js';
 
 
 
@@ -9,6 +11,19 @@ import { LoginPage,SignupPage,ActivationPage } from './routes/Routes.js'
 
 
 const App = () => {
+
+  useEffect(()=>{
+    axios.get(`${baseUrl}/user/get-user`,{withCredentials:true}).then((res)=>{
+
+      console.log(res.data.message)
+      toast.success(res.data.message)
+    }).catch((error)=>{
+      toast.error(error.response.data.message)
+      console.log(error)
+    })
+  },)
+
+
   return (
     
 <BrowserRouter>
