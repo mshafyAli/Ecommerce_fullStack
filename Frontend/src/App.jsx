@@ -6,7 +6,7 @@ import Store from "./redux/store.js"
 import { LoadUser } from './redux/actions/user.js'; 
 
 
-import { LoginPage,SignupPage,ActivationPage } from './routes/Routes.js'
+import { LoginPage,SignupPage,ActivationPage,HomePage } from './routes/Routes.js'
 
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
     
 <BrowserRouter>
 <Routes>
-    {/* <Route path='/' element={<LoginPage/>} /> */}
+    <Route path='/' element={<HomePage/>} />
     <Route path='/login' element={<LoginPage/>}/>
     <Route path='/sign-up' element={<SignupPage/>}/>
     <Route path='/activation/:activation_token' element={<ActivationPage />}/>
