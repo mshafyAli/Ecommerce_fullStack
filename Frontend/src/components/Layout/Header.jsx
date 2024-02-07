@@ -110,7 +110,7 @@ const Header = ({activeHeading}) => {
           {/* Categories */}
 
           <div>
-            <div className="relative h-[68px] mt-[18px] w-[278px] hidden 1000px:block">
+            <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
             <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
             <button className={`h-[100%] w-full flex items-center justify-between pl-10 bg-white font-sans font-[500] rounded-t-md text-lg select-none`}>All Categories</button>
             <IoIosArrowDown size={30} className="absolute top-4 right-2"
