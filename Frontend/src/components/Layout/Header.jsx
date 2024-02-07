@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch,  AiOutlineHeart, AiOutlineShoppingCart
+
+} from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
+
+import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
 import styles from "../../styles/styles.js";
-import { productData } from "../../static/data";
+import { categoriesData, productData } from "../../static/data";
+import DropDown from "./DropDown";
+import NavBar from "./NavBar";
 
-const Header = () => {
+const Header = ({activeHeading}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
+  const [active, setActive] = useState(false);
+  const [dropDown,setDropDown] = useState(false);
 
   const handleChange = (e) => {
     const term = e.target.value;
@@ -21,6 +30,15 @@ const Header = () => {
       );
     setSearchData(filteredData);
   };
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 70) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  });
+
   return (
     <>
       <div className={`${styles.section}`}>
@@ -70,14 +88,80 @@ const Header = () => {
             ) : null}
           </div>
 
-            {/* Become Seller */}
+          {/* Become Seller */}
           <div className={`${styles.button}`}>
             <Link to="/seller">
-              <h1 className="text-[#fff] flex items-center">Become Seller <IoIosArrowForward className="ml-1"/></h1>
-
+              <h1 className="text-[#fff] flex items-center">
+                Become Seller <IoIosArrowForward className="ml-1" />
+              </h1>
             </Link>
           </div>
-            
+        </div>
+      </div>
+
+      <div
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        } transition hidden 800px:flex items-center justify-between bg-[#3321c8] w-full h-[70px]`}
+      >
+        <div
+          className={`${styles.section} relative ${styles.noramlFlex} justify-between `}
+        >
+          {/* Categories */}
+
+          <div>
+            <div className="relative h-[68px] mt-[18px] w-[278px] hidden 1000px:block">
+            <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
+            <button className={`h-[100%] w-full flex items-center justify-between pl-10 bg-white font-sans font-[500] rounded-t-md text-lg select-none`}>All Categories</button>
+            <IoIosArrowDown size={30} className="absolute top-4 right-2"
+            onClick={()=>setDropDown(!dropDown)} />
+              {
+              dropDown ? (<DropDown categoriesData={categoriesData} setDropDown={setDropDown} />):null
+            }
+            </div>
+          </div>
+
+         {/* Nav items    */}
+
+         <div className={`${styles.noramlFlex}`}>
+          <NavBar active={activeHeading} />
+         </div>
+
+          {/* Right Side OF Header */}
+
+          <div className="flex">
+            <div className={`${styles.noramlFlex}`}>
+              <div className="relative cursor-pointer mr-[15px]">
+                <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)"/>
+                <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
+                  0
+                </span>
+
+              </div>
+
+            </div>
+            <div className={`${styles.noramlFlex}`}>
+              <div className="relative cursor-pointer mr-[15px]">
+                <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)"/>
+                <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
+                  1
+                </span>
+
+              </div>
+
+            </div>
+            <div className={`${styles.noramlFlex}`}>
+              <div className="relative cursor-pointer mr-[15px]">
+                <Link to='/login'>
+                <CgProfile size={30} color="rgb(255 255 255 / 83%)"/>
+                  
+                  </Link>                
+
+              </div>
+
+            </div>
+          </div>
+
 
         </div>
       </div>
