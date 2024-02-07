@@ -1,5 +1,7 @@
 import React from 'react'
-import styles from '../../../styles/styles'
+import styles from '../../../styles/styles';
+import { Link } from 'react-router-dom';
+
 
 const Hero = () => {
   return (
@@ -16,6 +18,13 @@ const Hero = () => {
           quidem asperiores, laudantium temporibus soluta optio consequatur{" "}
           <br /> aliquam deserunt officia. Dolorum saepe nulla provident.
         </p>
+
+        <Link to="/products" className='inline-block'>
+            <div className={`${styles.button} mt-5`}>
+                <span className='text-white font-[Poppins] text-[18px]'>Shop Now</span>
+            </div>
+        </Link>
+
         </div>
         
     </div>
