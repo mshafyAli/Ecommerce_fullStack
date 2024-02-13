@@ -109,11 +109,11 @@ const Header = ({activeHeading}) => {
         >
           {/* Categories */}
 
-          <div>
+          <div onClick={()=>setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
             <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
             <button className={`h-[100%] w-full flex items-center justify-between pl-10 bg-white font-sans font-[500] rounded-t-md text-lg select-none`}>All Categories</button>
-            <IoIosArrowDown size={30} className="absolute top-4 right-2"
+            <IoIosArrowDown size={30} className="absolute top-4 right-2 cursor-pointer"
             onClick={()=>setDropDown(!dropDown)} />
               {
               dropDown ? (<DropDown categoriesData={categoriesData} setDropDown={setDropDown} />):null
