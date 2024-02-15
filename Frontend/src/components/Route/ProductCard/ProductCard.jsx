@@ -124,7 +124,7 @@ const ProductCard = ({ data }) => {
 
         {
 
-            open ?(<ProductDetailsCard open={open} setOpen={setOpen} data={data}/>):null
+            open ?(<ProductDetailsCard setOpen={setOpen} data={data}/>):null
         }    
 
 
