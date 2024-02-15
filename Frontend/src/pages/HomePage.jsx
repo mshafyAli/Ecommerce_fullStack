@@ -4,7 +4,7 @@ import Hero from '../components/Route/Hero/Hero'
 import Categories from '../components/Route/Categories/Categories'
 import BestDetails from '../components/Route/BestDetails/BestDetails'
 import FeatureProduct from '../components/Route/FeatureProduct/FeatureProduct'
-
+import Events from '../components/Route/Events/Events'
 
 const HomePage = () => {
   return (
@@ -13,6 +13,7 @@ const HomePage = () => {
         <Hero/>
         <Categories/>
         <BestDetails/>
+        <Events />
         <FeatureProduct />
         
     </div>
