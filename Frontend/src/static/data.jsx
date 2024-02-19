@@ -602,12 +602,15 @@ export const navItems = [
     },
     {
       name: "Store Locations",
+      link: "/store-locations"
     },
     {
       name: "Our Blog",
+      link: "/our-blog"
     },
     {
       name: "Reviews",
+      link: "/reviews"
     },
   ];
   
