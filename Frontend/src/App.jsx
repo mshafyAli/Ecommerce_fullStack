@@ -6,7 +6,7 @@ import Store from "./redux/store.js"
 import { LoadUser } from './redux/actions/user.js'; 
 
 
-import { LoginPage,SignupPage,ActivationPage,HomePage,ProductPage,BestSellingPage,EventsPage } from './routes/Routes.js'
+import { LoginPage,SignupPage,ActivationPage,HomePage,ProductPage,BestSellingPage,EventsPage,FAQPage } from './routes/Routes.js'
 
 
 const App = () => {
@@ -28,6 +28,7 @@ const App = () => {
     <Route path='/products' element={<ProductPage/>}/>
     <Route path='/best-selling' element={<BestSellingPage/>}/>
     <Route path='/events' element={<EventsPage/>}/>
+    <Route path='/faq' element={<FAQPage/>}/>
 </Routes>
 <ToastContainer
 position="bottom-center"
