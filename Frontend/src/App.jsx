@@ -6,7 +6,7 @@ import Store from "./redux/store.js"
 import { LoadUser } from './redux/actions/user.js'; 
 
 
-import { LoginPage,SignupPage,ActivationPage,HomePage,ProductPage,BestSellingPage } from './routes/Routes.js'
+import { LoginPage,SignupPage,ActivationPage,HomePage,ProductPage,BestSellingPage,EventsPage } from './routes/Routes.js'
 
 
 const App = () => {
@@ -27,6 +27,7 @@ const App = () => {
     <Route path='/activation/:activation_token' element={<ActivationPage />}/>
     <Route path='/products' element={<ProductPage/>}/>
     <Route path='/best-selling' element={<BestSellingPage/>}/>
+    <Route path='/events' element={<EventsPage/>}/>
 </Routes>
 <ToastContainer
 position="bottom-center"
