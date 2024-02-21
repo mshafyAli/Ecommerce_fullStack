@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineSearch,  AiOutlineHeart, AiOutlineShoppingCart
-
+import {
+  AiOutlineSearch,
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 
@@ -13,11 +16,15 @@ import { categoriesData, productData } from "../../static/data";
 import DropDown from "./DropDown";
 import NavBar from "./NavBar";
 
-const Header = ({activeHeading}) => {
+const Header = ({ activeHeading }) => {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
-  const [dropDown,setDropDown] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
+
+
+  // console.log(user);
 
   const handleChange = (e) => {
     const term = e.target.value;
@@ -109,60 +116,70 @@ const Header = ({activeHeading}) => {
         >
           {/* Categories */}
 
-          <div onClick={()=>setDropDown(!dropDown)}>
+          <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
-            <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
-            <button className={`h-[100%] w-full flex items-center justify-between pl-10 bg-white font-sans font-[500] rounded-t-md text-lg select-none`}>All Categories</button>
-            <IoIosArrowDown size={30} className="absolute top-4 right-2 cursor-pointer"
-            onClick={()=>setDropDown(!dropDown)} />
-              {
-              dropDown ? (<DropDown categoriesData={categoriesData} setDropDown={setDropDown} />):null
-            }
+              <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
+              <button
+                className={`h-[100%] w-full flex items-center justify-between pl-10 bg-white font-sans font-[500] rounded-t-md text-lg select-none`}
+              >
+                All Categories
+              </button>
+              <IoIosArrowDown
+                size={30}
+                className="absolute top-4 right-2 cursor-pointer"
+                onClick={() => setDropDown(!dropDown)}
+              />
+              {dropDown ? (
+                <DropDown
+                  categoriesData={categoriesData}
+                  setDropDown={setDropDown}
+                />
+              ) : null}
             </div>
           </div>
 
-         {/* Nav items    */}
+          {/* Nav items    */}
 
-         <div className={`${styles.noramlFlex}`}>
-          <NavBar active={activeHeading} />
-         </div>
+          <div className={`${styles.noramlFlex}`}>
+            <NavBar active={activeHeading} />
+          </div>
 
           {/* Right Side OF Header */}
 
           <div className="flex">
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)"/>
+                <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
                   0
                 </span>
-
               </div>
-
             </div>
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)"/>
+                <AiOutlineShoppingCart
+                  size={30}
+                  color="rgb(255 255 255 / 83%)"
+                />
                 <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
                   1
                 </span>
-
               </div>
-
             </div>
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                <Link to='/login'>
-                <CgProfile size={30} color="rgb(255 255 255 / 83%)"/>
-                  
-                  </Link>                
-
+                {isAuthenticated ? (
+                  <Link to="/profile">
+                    <img src={`http://localhost:3000/${user.avatar}`} className="w-[40px] h-[40px] rounded-full" alt="" />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                  </Link>
+                )}
               </div>
-
             </div>
           </div>
-
-
         </div>
       </div>
     </>

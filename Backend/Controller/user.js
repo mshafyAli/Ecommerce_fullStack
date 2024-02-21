@@ -140,7 +140,7 @@ router.post("/login-user",catchAsyncError(async(req,res,next)=>{
 })
 );
 
-router.post("/get-user",isAuthenticatedUser,catchAsyncError(async()=>{
+router.get("/get-user",isAuthenticatedUser,catchAsyncError(async(req,res,next)=>{
   
   try{
 

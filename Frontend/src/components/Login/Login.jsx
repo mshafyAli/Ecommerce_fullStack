@@ -25,6 +25,7 @@ try{
 },{withCredentials:true}).then((res)=>{
   toast.success("Login Successfully");
   navigate("/");
+  window.location.reload();
   console.log(res);
   
 })

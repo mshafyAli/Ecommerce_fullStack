@@ -23,3 +23,10 @@ export const userReducer = createReducer(initialState, (builder) => {
             state.error = null;
         });
 });
+
+
+
+
+
+
+export default userReducer;
