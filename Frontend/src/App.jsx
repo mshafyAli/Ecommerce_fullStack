@@ -18,15 +18,17 @@ import {
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const { loading } = useSelector((state) => state.user);
+  const { Loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     Store.dispatch(LoadUser());
   }, []);
 
-  return <>
+  
+  return (
+    <>
   {
-    loading ? (<h1 className="text-3xl font-bold text-red-600 text-center my-12">loading......</h1>):(<BrowserRouter>
+    Loading ? (<h1 className="text-2xl text-center font-semibold text-red-600 my-12">Loading...</h1>) :(<BrowserRouter>
       <Routes>
           <Route path='/' element={<HomePage/>} />
           <Route path='/login' element={<LoginPage/>}/>
@@ -49,9 +51,11 @@ const App = () => {
       pauseOnHover
       theme="light"
       />
-      
+
       </BrowserRouter>)
-  }</>;
+  }
+  </>
+  )
 };
 
 export default App;
