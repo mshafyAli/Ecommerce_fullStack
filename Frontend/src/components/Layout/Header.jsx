@@ -15,6 +15,7 @@ import styles from "../../styles/styles.js";
 import { categoriesData, productData } from "../../static/data";
 import DropDown from "./DropDown";
 import NavBar from "./NavBar";
+import Cart from "../Cart/Cart"
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -22,6 +23,8 @@ const Header = ({ activeHeading }) => {
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [openCart,setOpenCart] = useState(false);
+  const [openWishList,setOpenWishList] = useState(false);
 
 
   // console.log(user);
@@ -156,7 +159,7 @@ const Header = ({ activeHeading }) => {
               </div>
             </div>
             <div className={`${styles.noramlFlex}`}>
-              <div className="relative cursor-pointer mr-[15px]">
+              <div className="relative cursor-pointer mr-[15px]" onClick={()=>setOpenCart(true)}>
                 <AiOutlineShoppingCart
                   size={30}
                   color="rgb(255 255 255 / 83%)"
@@ -179,6 +182,14 @@ const Header = ({ activeHeading }) => {
                 )}
               </div>
             </div>
+
+          {/* Cart Popups */}
+          {
+            openCart ? (<Cart setOpenCart={setOpenCart}/>):(null)
+          }
+
+
+
           </div>
         </div>
       </div>

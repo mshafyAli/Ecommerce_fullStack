@@ -15,10 +15,7 @@ import {
   EventsPage,
   FAQPage,
 } from "./routes/Routes.js";
-import { useSelector } from "react-redux";
-
 const App = () => {
-  const { Loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     Store.dispatch(LoadUser());
@@ -27,8 +24,7 @@ const App = () => {
   
   return (
     <>
-  {
-    Loading ? (<h1 className="text-2xl text-center font-semibold text-red-600 my-12">Loading...</h1>) :(<BrowserRouter>
+ <BrowserRouter>
       <Routes>
           <Route path='/' element={<HomePage/>} />
           <Route path='/login' element={<LoginPage/>}/>
@@ -52,9 +48,10 @@ const App = () => {
       theme="light"
       />
 
-      </BrowserRouter>)
-  }
-  </>
+      </BrowserRouter>
+
+
+</>
   )
 };
 
