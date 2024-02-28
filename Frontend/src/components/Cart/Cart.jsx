@@ -43,7 +43,7 @@ const Cart = ({setOpenCart}) => {
                 {/* Item length */}
                 <div className={`${styles.noramlFlex} p-4`}>
                 <IoBagHandleOutline size={25} />
-                <h1 className='text-[20px] font-[500] pl-2'>3</h1>
+                <h1 className='text-[20px] font-[500] pl-2'>3 items</h1>
                 </div>
 
                 <br />

@@ -16,6 +16,7 @@ import { categoriesData, productData } from "../../static/data";
 import DropDown from "./DropDown";
 import NavBar from "./NavBar";
 import Cart from "../Cart/Cart"
+import WishList from "../WishList/WishList"
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -151,7 +152,7 @@ const Header = ({ activeHeading }) => {
 
           <div className="flex">
             <div className={`${styles.noramlFlex}`}>
-              <div className="relative cursor-pointer mr-[15px]">
+              <div className="relative cursor-pointer mr-[15px]" onClick={()=>setOpenWishList(true)}>
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
                   0
@@ -188,6 +189,11 @@ const Header = ({ activeHeading }) => {
             openCart ? (<Cart setOpenCart={setOpenCart}/>):(null)
           }
 
+          
+          {/* WishList Popups */}
+          {
+            openWishList ? (<WishList setOpenWishList={setOpenWishList}/>):(null)
+          } 
 
 
           </div>
