@@ -14,6 +14,7 @@ import {
   BestSellingPage,
   EventsPage,
   FAQPage,
+  ProductDetailsPage,
 } from "./routes/Routes.js";
 const App = () => {
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path='/sign-up' element={<SignupPage/>}/>
           <Route path='/activation/:activation_token' element={<ActivationPage />}/>
           <Route path='/products' element={<ProductPage/>}/>
+          <Route path='/product/:name' element={<ProductDetailsPage />}/>
           <Route path='/best-selling' element={<BestSellingPage/>}/>
           <Route path='/events' element={<EventsPage/>}/>
           <Route path='/faq' element={<FAQPage/>}/>
