@@ -165,6 +165,15 @@ router.get("/get-user",isAuthenticatedUser,catchAsyncError(async(req,res,next)=>
 
 }))
 
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
+  });
+});
+
 export default router;
 
 
