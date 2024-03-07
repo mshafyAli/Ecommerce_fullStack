@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { LoadUser } from "./redux/actions/user.js";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
 import {
   LoginPage,
@@ -37,7 +38,11 @@ const App = () => {
           <Route path='/best-selling' element={<BestSellingPage/>}/>
           <Route path='/events' element={<EventsPage/>}/>
           <Route path='/faq' element={<FAQPage/>}/>
-          <Route path='/profile' element={<ProfilePage />}/>
+          <Route path='/profile' element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }/>
       </Routes>
       <ToastContainer
       position="bottom-center"
