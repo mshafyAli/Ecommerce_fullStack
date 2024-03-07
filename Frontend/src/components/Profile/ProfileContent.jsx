@@ -43,39 +43,39 @@ const ProfileContent = ({ active }) => {
           <br />
           <div className="w-full px-4">
             <form onSubmit={handleSubmit} aria-required={true}>
-              <div className="w-full flex pb-3">
-                <div className="w-[50%]">
+              <div className="w-full 800px:flex block pb-3">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Full Name</label>
-                  <input type="text" required value={name} className={`${styles.input} !w-[95%]`} onChange={(e)=>setName(e.target.value)} />
+                  <input type="text" required value={name} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setName(e.target.value)} />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Email</label>
-                  <input type="text" required value={email} className={`${styles.input} !w-[95%]`} onChange={(e)=>setEmail(e.target.value)} />
+                  <input type="text" required value={email} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setEmail(e.target.value)} />
                 </div>
 
 
               </div>
-              <div className="w-full flex pb-3">
-                <div className="w-[50%]">
+              <div className="w-full 800px:flex block pb-3">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Phone Number</label>
-                  <input type="number" required value={phoneNumber} className={`${styles.input} !w-[95%]`} onChange={(e)=>setPhoneNumber(e.target.value)} />
+                  <input type="number" required value={phoneNumber} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setPhoneNumber(e.target.value)} />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Zip Code</label>
-                  <input type="text" required value={zipCode} className={`${styles.input} !w-[95%]`} onChange={(e)=>setZipCode(e.target.value)} />
+                  <input type="text" required value={zipCode} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setZipCode(e.target.value)} />
                 </div>
 
 
               </div>
 
-              <div className="w-full flex pb-3">
-                <div className="w-[50%]">
+              <div className="w-full 800px:flex block pb-3">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Address 1</label>
-                  <input type="address" required value={address1} className={`${styles.input} !w-[95%]`} onChange={(e)=>setAddress1(e.target.value)} />
+                  <input type="address" required value={address1} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setAddress1(e.target.value)} />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Address 2</label>
-                  <input type="address" required value={address2} className={`${styles.input} !w-[95%]`} onChange={(e)=>setAddress2(e.target.value)} />
+                  <input type="address" required value={address2} className={`${styles.input} !w-[95%] mb-4 800px:mb-0`} onChange={(e)=>setAddress2(e.target.value)} />
                 </div>
 
 
@@ -433,7 +433,7 @@ const Address = () =>{
       </div>
 
       <div className='flex items-center pl-8'>
-        <h6>(+92)-765456789</h6>
+        <h6>(+92)-3456543555</h6>
       </div>
       
       <div className='pl-8 min-w-[10%]'>
