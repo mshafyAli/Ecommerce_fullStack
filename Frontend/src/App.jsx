@@ -17,6 +17,7 @@ import {
   FAQPage,
   ProductDetailsPage,
   ProfilePage,
+  ShopCreatePage,
 } from "./routes/Routes.js";
 const App = () => {
 
@@ -43,6 +44,7 @@ const App = () => {
               <ProfilePage />
             </ProtectedRoute>
           }/>
+          <Route path='/shop-create' element={<ShopCreatePage/>}/>
       </Routes>
       <ToastContainer
       position="bottom-center"
