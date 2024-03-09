@@ -18,8 +18,8 @@ const handleLogout = () => {
     .get(`${baseUrl}/user/logout`, { withCredentials: true })
     .then((res) => {
       toast.success(res.data.message);
-      navigate("/login");
       window.location.reload(true);
+      navigate("/login");
     })
     .catch((error) => {
       console.log(error.response.data.message);
