@@ -4,49 +4,62 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { toast } from "react-toastify";
-import baseUrl from "../../src/baseUrl";
-import styles from "../../src/styles/styles.js";
+import  baseUrl  from "../../baseUrl";
+import styles from  "../../styles/styles"
 import { RxAvatar } from "react-icons/rx";
-import { set } from "mongoose";
 
 const ShopCreate = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState(0);
   const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState();
+  const [zipCode, setZipCode] = useState(0);
   const [avatar, setAvatar] = useState();
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      await axios
-        .post(
-          `${baseUrl}/user/login-user`,
-          {
-            email,
-            password,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          toast.success("Login Successfully");
-          navigate("/");
-          window.location.reload(true);
-          console.log(res);
-        });
-    } catch (error) {
-      if (error.response.status === 400) {
-        toast.error("Invalid email or password");
+    try{
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('name', name);
+      formData.append('password', password);
+      formData.append('file', avatar);
+      formData.append('address', address);
+      formData.append('phoneNumber', phoneNumber);
+      formData.append('zipCode', zipCode);
+      // console.log(formData);
+     await axios.post(`${baseUrl}/shop/create-shop`, formData,config).then((res)=>{
+      toast.success(res.data.message);
+        setEmail("");
+        setName("");
+        setPassword("");
+        setAvatar();
+        setAddress("");
+        setPhoneNumber();
+        setZipCode();
+        console.log(res);
+        
+      })
+    
+     }catch(error) {
+      if (error.response && error.response.status === 400) {
+        // Handle specific error scenario (user already exists)
+        toast.error("User already exists. Please use a different email.");
       } else {
-        toast.error("Login Failed");
+        // Generic error handling
+        toast.error("An error occurred. Please try again later.");
+        console.error(error);
       }
-      console.log(error);
     }
+    
   };
 
 

@@ -41,10 +41,12 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 // import Routes
 
 import userRoutes from './Controller/user.js';
+import shopRoutes from './Controller/shop.js';
 
 
 
 app.use('/api/v2/user', userRoutes);
+app.use('/api/v2/shop', shopRoutes);
 
 // const PORT = process.env.PORT || 3000;
 app.listen(3000, () => {
