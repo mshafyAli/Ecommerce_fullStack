@@ -8,6 +8,7 @@ import {upload} from "../multer.js"
 import catchAsyncError from "../Middleware/catchAsyncError.js";
 import sendShopToken from "../Utills/shopToken.js";
 import errorHandler from "../Utills/errorHandler.js";
+import { isSeller } from "../Middleware/auth.js";
 
 
 
@@ -156,6 +157,28 @@ router.post("/login-shop",catchAsyncError(async(req,res,next)=>{
 
 
 })
+);
+
+// load Shop
+router.get(
+  "/get-seller",
+  isSeller,catchAsyncError(async (req, res, next) => {
+    try {
+      const seller = await Shop.findById(req.seller._id);
+      console.log(seller);
+
+      if (!seller) {
+        return next(new errorHandler("User doesn't exists", 400));
+      }
+
+      res.status(200).json({
+        success: true,
+        seller,
+      });
+    } catch (error) {
+      return next(new errorHandler(error.message, 500));
+    }
+  })
 );
 
 

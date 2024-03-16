@@ -1,10 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { LoadUser } from "./redux/actions/user.js";
+import { LoadSeller }  from "./redux/actions/user.js";
+import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+import SellerProtectedRoute from './routes/SellerProtectdedRoute.jsx';
+
+import { ShopHomePage } from "./ShopRoutes";
 
 import {
   LoginPage,
@@ -23,9 +29,17 @@ import {
 } from "./routes/Routes.js";
 const App = () => {
 
+  const{ isSeller} = useSelector((state)=>state.seller);
+  // const dispatch = useDispatch();
+
   useEffect(() => {
     Store.dispatch(LoadUser());
+    Store.dispatch(LoadSeller());
+
+    
+
   }, []);
+
 
   
   return (
@@ -47,8 +61,16 @@ const App = () => {
               <ProfilePage />
             </ProtectedRoute>
           }/>
+
+          {/* Shop Route */}
+
           <Route path='/shop-create' element={<ShopCreatePage/>}/>
           <Route path='/shop-login' element={<ShopLoginPage/>}/>
+          <Route path='/shop/:id' element={
+            <SellerProtectedRoute isSeller={isSeller}>
+              <ShopHomePage/>
+            </SellerProtectedRoute>
+          }/>
       </Routes>
       <ToastContainer
       position="bottom-center"

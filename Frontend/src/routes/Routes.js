@@ -12,7 +12,6 @@ import ShopCreatePage from '../pages/ShopCreatePage';
 import SellerActivationPage from '../pages/SellerActivationPage';
 import ShopLoginPage from '../pages/ShopLoginPage';
 
-
 export {
     LoginPage,
     SignupPage,
