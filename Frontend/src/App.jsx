@@ -11,6 +11,7 @@ import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import SellerProtectedRoute from './routes/SellerProtectdedRoute.jsx';
 
 import { ShopHomePage } from "./ShopRoutes";
+import { ShopDashBoardPage } from "./routes/ShopRoutes";
 
 import {
   LoginPage,
@@ -28,9 +29,6 @@ import {
   SellerActivationPage,
 } from "./routes/Routes.js";
 const App = () => {
-
-  const{ isSeller} = useSelector((state)=>state.seller);
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     Store.dispatch(LoadUser());
@@ -67,8 +65,13 @@ const App = () => {
           <Route path='/shop-create' element={<ShopCreatePage/>}/>
           <Route path='/shop-login' element={<ShopLoginPage/>}/>
           <Route path='/shop/:id' element={
-            <SellerProtectedRoute isSeller={isSeller}>
+            <SellerProtectedRoute >
               <ShopHomePage/>
+            </SellerProtectedRoute>
+          }/>
+          <Route path='/dashboard' element={
+            <SellerProtectedRoute >
+              <ShopDashBoardPage/>
             </SellerProtectedRoute>
           }/>
       </Routes>
