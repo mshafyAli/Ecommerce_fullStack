@@ -6,6 +6,7 @@ const ShopDashBoardPage = () => {
   return (
     <div>
       <DashBoardHeader />
+      
       <div className="w-[80px] 800px:w-[330px]">
         <DashBoardSidebar active={1}/>
       </div>
