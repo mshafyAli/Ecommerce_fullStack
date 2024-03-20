@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { categoriesData } from '../../static/data';
 
 const CreateProduct = () => {
@@ -21,10 +22,13 @@ const CreateProduct = () => {
 
 
   const submitHandler =  (e) => {
+    e.preventDefault();
     
   }
   const handleImageChange = (e) => {
-
+    e.preventDefault();
+    let files = Array.from(e.target.files);
+    setImages((prevImages) => [...prevImages,...files])
   }
 
   return (
@@ -142,6 +146,29 @@ const CreateProduct = () => {
             multiple
             onChange={handleImageChange}
           />
+
+          <div className='w-full flex items-center flex-wrap'>
+          <label htmlFor="upload">
+              <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
+            </label>
+
+          {
+            images && images.map((i) => (
+              <img src={URL.createObjectURL(i)} key={i}  alt="" className='h-[120px] w-[120px] object-cover m-2' />
+            ))
+          }
+          </div>
+
+
+          <br />
+          <div>
+            <input
+              type="submit"
+              value="Create"
+              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+          
           </div>
         </form>
 
