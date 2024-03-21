@@ -48,7 +48,6 @@ export const isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
 
 export const isSeller = catchAsyncError(async(req,res,next) => {
     const {seller_token} = req.cookies;
-    console.log("seller token", seller_token);
     if(!seller_token){
         return next(new errorHandler("Please login to continue", 401));
     }
