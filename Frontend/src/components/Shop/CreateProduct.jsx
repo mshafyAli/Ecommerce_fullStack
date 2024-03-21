@@ -1,17 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { categoriesData } from '../../static/data';
+import { createProduct } from '../../redux/actions/product';
+import { toast } from 'react-toastify';
 
 const CreateProduct = () => {
     const {seller} = useSelector((state)=>state.seller);
+    const {error,success} = useSelector((state)=>state.products);
     const navigate = useNavigate();
     const dispatch = useDispatch();
   
 
 
-    const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -21,8 +24,35 @@ const CreateProduct = () => {
   const [stock, setStock] = useState();
 
 
+  useEffect(()=>{
+    if(error){
+      toast.error(error);
+    }
+    if(success){
+      toast.success("Product Created Successfully");
+      navigate("/dashboard");
+      window.location.reload();
+    }
+
+  },[error,success,dispatch])
+
+
   const submitHandler =  (e) => {
     e.preventDefault();
+    const newForm = new FormData();
+    images.forEach((image)=>{
+        newForm.append("images", image);
+    })
+    
+    newForm.append("name", name);
+    newForm.append("description", description);
+    newForm.append("category", category);
+    newForm.append("tags", tags);
+    newForm.append("originalPrice", originalPrice);
+    newForm.append("discountPrice", discountPrice);
+    newForm.append("stock", stock);
+    newForm.append("shopId", seller._id);
+    dispatch(createProduct(newForm));
     
   }
   const handleImageChange = (e) => {
