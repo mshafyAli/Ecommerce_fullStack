@@ -1,11 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import backend_Url from "../../backend_Url";
 import styles from "../../styles/styles";
+import axios from "axios";
+import  backend_Url  from "../../backend_Url";
+import baseUrl from "../../baseUrl";
 
 const ShopInfo = ({ isOwner }) => {
   const { seller } = useSelector((state) => state.seller);
   const logoutHandler = () => {
+    try{
+     const res =  axios.get(`${baseUrl}/shop/logout`, {
+        withCredentials: true,
+      })
+      window.location.reload();
+    }catch(err){
+      
+    }
     
   }
   return (

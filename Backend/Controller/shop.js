@@ -181,6 +181,26 @@ router.get(
   })
 );
 
+router.get(
+  "/logout",
+  catchAsyncError(async (req, res, next) => {
+    try {
+      res.cookie("seller_token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      });
+      res.status(201).json({
+        success: true,
+        message: "Log out successful!",
+      });
+    } catch (error) {
+      return next(new errorHandler(error.message, 500));
+    }
+  })
+);
+
 
 
 export default router;

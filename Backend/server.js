@@ -43,12 +43,14 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 import userRoutes from './Controller/user.js';
 import shopRoutes from './Controller/shop.js';
 import productRoutes from './Controller/product.js';
+import eventRoutes from './Controller/event.js';
 
 
 
 app.use('/api/v2/user', userRoutes);
 app.use('/api/v2/shop', shopRoutes);
 app.use('/api/v2/product', productRoutes);
+app.use('/api/v2/event',  eventRoutes);
 
 // const PORT = process.env.PORT || 3000;
 app.listen(3000, () => {
