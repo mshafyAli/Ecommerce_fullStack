@@ -59,7 +59,21 @@ router.delete('/delete-shop-product/:id',isSeller, catchAsyncError(async(req, re
     try{
         const productId = req.params.id;
 
+        const productData = await Product.findById(productId);
+
+        productData.images.forEach((imageUrl)=>{
+            const filename = imageUrl;
+            const filePath = `uploads/${filename}`;
+
+            fs.unlink(filePath, (err)=>{
+                if(err){
+                    console.log(err);
+                }
+            })
+        })
+
         const product = await Product.findByIdAndDelete(productId);
+
 
         if(!product){
             return next(new errorHandler("Product Id is invalid!", 400));

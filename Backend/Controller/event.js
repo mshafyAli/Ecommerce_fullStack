@@ -1,11 +1,11 @@
 import express from 'express';
-import Product from '../Model/product.model.js';
 import Shop from '../Model/shop.model.js';
 import { upload } from '../multer.js';
 import catchAsyncError from '../Middleware/catchAsyncError.js';
 import errorHandler from "../Utills/errorHandler.js";
 import Event from '../Model/event.model.js';
 import { isSeller } from '../Middleware/auth.js';
+import fs from 'fs';
 
 
 const router = express.Router();
@@ -62,6 +62,17 @@ router.delete('/delete-shop-event/:id',isSeller, catchAsyncError(async(req, res,
     try{
         const productId = req.params.id;
 
+        const eventData = await Event.findById(productId);
+        eventData.images.forEach((imageUrl)=>{
+            const filename = imageUrl;
+            const filePath = `uploads/${filename}`;
+
+            fs.unlink(filePath, (err)=>{
+                if(err){
+                    console.log(err);
+                }
+            })
+        })
         const event = await Event.findByIdAndDelete(productId);
 
         if(!event){
