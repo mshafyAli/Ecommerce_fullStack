@@ -44,6 +44,7 @@ import userRoutes from './Controller/user.js';
 import shopRoutes from './Controller/shop.js';
 import productRoutes from './Controller/product.js';
 import eventRoutes from './Controller/event.js';
+import coupunRoutes from './Controller/CouponCode.js';
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/v2/user', userRoutes);
 app.use('/api/v2/shop', shopRoutes);
 app.use('/api/v2/product', productRoutes);
 app.use('/api/v2/event',  eventRoutes);
+app.use('/api/v2/coupun', coupunRoutes);
 
 // const PORT = process.env.PORT || 3000;
 app.listen(3000, () => {
