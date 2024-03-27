@@ -12,7 +12,7 @@ import styles from "../../styles/styles";
 import baseUrl from "../../baseUrl";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { set } from "mongoose";
+
 const AllCoupouns = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -46,11 +46,13 @@ const AllCoupouns = () => {
       });
   }, [dispatch]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+  const handleDelete = async (id) => {
+    axios.delete(`${baseUrl}/coupun/delete-coupon/${id}`,{withCredentials: true}).then((res) => {
+      toast.success("Coupon code deleted succesfully!")
+    })
     window.location.reload();
-    // console.log(id);
   };
+
 
 
   const handleSubmit =async (e)=>{

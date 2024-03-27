@@ -51,6 +51,29 @@ router.get(
   );
 
 
+  // delete coupoun code of a shop
+router.delete(
+  "/delete-coupon/:id",
+  isSeller,
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const couponCode = await CouponCode.findByIdAndDelete(req.params.id);
+
+      if (!couponCode) {
+        return next(new errorHandler("Coupon code dosen't exists!", 400));
+      }
+      res.status(201).json({
+        success: true,
+        message: "Coupon code deleted successfully!",
+      });
+    } catch (error) {
+      return next(new errorHandler(error, 400));
+    }
+  })
+);
+
+
+
 
 
 export default router;
