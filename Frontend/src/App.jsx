@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { LoadUser } from "./redux/actions/user.js";
 import { LoadSeller }  from "./redux/actions/user.js";
+import { getAllProducts } from "./redux/actions/product.js";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import SellerProtectedRoute from './routes/SellerProtectdedRoute.jsx';
 
 import { ShopHomePage } from "./ShopRoutes";
-import { ShopDashBoardPage,ShopCreateProduct,ShopAllProducts,ShopCreateEvents,ShopAllEvents,ShopCoupouns } from "./routes/ShopRoutes";
+import { ShopDashBoardPage,ShopCreateProduct,ShopAllProducts,ShopCreateEvents,ShopAllEvents,ShopCoupouns,ShopPreviewPage } from "./routes/ShopRoutes";
 
 import {
   LoginPage,
@@ -33,9 +34,11 @@ const App = () => {
   useEffect(() => {
     Store.dispatch(LoadUser());
     Store.dispatch(LoadSeller());
-
+    Store.dispatch(getAllProducts())
     
 
+
+    
   }, []);
 
 
@@ -62,6 +65,9 @@ const App = () => {
 
           {/* Shop Route */}
 
+
+
+          <Route path='/shop/preview/:id' element={<ShopPreviewPage/>}/>
           <Route path='/shop-create' element={<ShopCreatePage/>}/>
           <Route path='/shop-login' element={<ShopLoginPage/>}/>
           <Route path='/shop/:id' element={

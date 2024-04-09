@@ -4,7 +4,7 @@ import baseUrl from "../../baseUrl";
 export const createProduct = (newForm) => async (dispactch) => {
   try {
     dispactch({
-      type: " productCreateRequest",
+      type: "productCreateRequest",
     });
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
@@ -27,9 +27,9 @@ export const createProduct = (newForm) => async (dispactch) => {
   }
 };
 
-//get all Products
+//get all Products Of Shop
 
-export const getAllProducts = (id) => async (dispatch) => {
+export const getAllProductsShop = (id) => async (dispatch) => {
   try {
     dispatch({
         type:"getAllProductsShopRequest"
@@ -81,3 +81,23 @@ export const deleteProduct = (id) => async (dispatch) => {
         })
     }
 }
+
+// get all products
+export const getAllProducts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllProductsRequest",
+    });
+
+    const { data } = await axios.get(`${baseUrl}/product/get-all-products`);
+    dispatch({
+      type: "getAllProductsSuccess",
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllProductsFailed",
+      payload: error.response.data.message,
+    });
+  }
+};

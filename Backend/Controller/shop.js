@@ -202,5 +202,20 @@ router.get(
 );
 
 
+// get Shop info
+router.get('/get-shop-info/:id',catchAsyncError(async(req, res, next)=>{
+  try{
+    const shop = await Shop.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      shop,
+    })
+  }catch(err){
+    return next(new errorHandler(err.message), 500);
+
+  }
+}))
+
+
 
 export default router;

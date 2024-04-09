@@ -35,10 +35,10 @@ const ProductDetailsCard = ({ setOpen, data }) => {
               {/* Right Side */}
 
               <div className="w-full 800px:w-[50%]">
-                <img src={data.image_Url[0].url} alt="" />
+                {/* <img src={data.image_Url[0].url} alt="" /> */}
                 <div className="flex">
                   <img
-                    src={data.shop.shop_avatar.url}
+                    // src={data.shop.shop_avatar.url}
                     alt=""
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />
@@ -60,6 +60,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
                 <h5 className="text-[16px] text-[red] mt-5">
                   ({data.total_sell})Sold Out
+                  {console.log(data)}
                 </h5>
               </div>
 

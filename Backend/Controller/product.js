@@ -90,7 +90,22 @@ router.delete('/delete-shop-product/:id',isSeller, catchAsyncError(async(req, re
     
 }))
 
-
+// get all products
+router.get(
+    "/get-all-products",
+    catchAsyncError(async (req, res, next) => {
+      try {
+        const products = await Product.find().sort({ createdAt: -1 });
+  
+        res.status(201).json({
+          success: true,
+          products,
+        });
+      } catch (error) {
+        return next(new errorHandler(error, 400));
+      }
+    })
+  );
 
 
 export default router;
