@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles";
 import {
   AiFillHeart,
@@ -7,12 +7,26 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { getAllProductsShop } from '../../redux/actions/product'
+import backend_Url from "../../backend_Url";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
+
+
+
+  const {products} = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    dispatch(getAllProductsShop(data && data.shop._id))
+  },[dispatch])
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -36,36 +50,25 @@ const ProductDetails = ({ data }) => {
               {/* left Side Content */}
 
               <div className="w-full 800px:w-[50%]">
-                <img
-                  src={data.image_Url[select].url}
-                  alt=""
-                  className="w-[80%]"
-                />
+              <img src={`${backend_Url}${data && data.images[select]}`} className="w-[80%]" />
+
                 <div className="w-full flex">
-                  <div
+                  {
+                    data && data.images.map((i,index)=>(
+                      <div
                     className={`${
                       select === 0 ? "border" : "null"
                     } cursor-pointer`}
                   >
-                    <img
-                      src={data?.image_Url[0].url}
+                    <img src={`${backend_Url}${i}`}
                       alt=""
-                      className="h-[200px]"
-                      onClick={() => setSelect(0)}
+                      className="h-[200px] overflow-hidden mr-3 mt-3"
+                      onClick={() => setSelect(index)}
                     />
                   </div>
-                  <div
-                    className={`${
-                      select === 1 ? "border" : "null"
-                    } cursor-pointer`}
-                  >
-                    <img
-                      src={data?.image_Url[1].url}
-                      alt=""
-                      className="h-[200px]"
-                      onClick={() => setSelect(1)}
-                    />
-                  </div>
+                    ))
+                  }
+                  
                 </div>
               </div>
 
@@ -77,10 +80,10 @@ const ProductDetails = ({ data }) => {
 
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
+                    {data.discountPrice}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.originalPrice ? data.originalPrice + "$" : null}
                   </h3>
                 </div>
 
@@ -133,18 +136,20 @@ const ProductDetails = ({ data }) => {
                 </div>
 
                 <div className="flex items-center ">
+              
                   <img
-                    src={data.shop.shop_avatar.url}
+                    src={`${backend_Url}${data.shop.avatar}`}
                     className="w-[50px] h-[50px] rounded-full mr-2"
                     alt=""
                   />
+                  
 
                   <div className="pr-8">
                     <h3 className={`${styles.shop_name} pb-1 pt-1`}>
                       {data.shop.name}
                     </h3>
                     <h5 className="text-[15px] pb-3">
-                      ({data.shop.ratings})Ratings
+                      (4/5) Ratings
                     </h5>
                   </div>
 
@@ -162,7 +167,7 @@ const ProductDetails = ({ data }) => {
             </div>
           </div>
 
-          <ProductDetailsInfo data={data} />
+          <ProductDetailsInfo data={data} products={products} />
           <br />
           <br />
         </div>
@@ -171,7 +176,7 @@ const ProductDetails = ({ data }) => {
   );
 };
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data,products }) => {
   const [active, setActive] = useState(1);
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 rounded py-2">
@@ -213,27 +218,9 @@ const ProductDetailsInfo = ({ data }) => {
       {active === 1 ? (
         <>
           <p className="text-[18px] py-2 leading-8 pb-10 whitespace-pre-line">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-            quae dicta voluptate fuga qui maiores dignissimos illo, vel
-            voluptatem at minus, tempora consequatur optio nesciunt commodi nam
-            ratione. Dicta, possimus Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Dolorum assumenda corrupti, illum nesciunt ducimus
-            velit, fugiat repudiandae cupiditate soluta distinctio et animi,
-            molestiae ratione aliquid dignissimos. Consequuntur aspernatur
-            corrupti ducimus?
+            {data.description}
           </p>
-          <p className="text-[18px] py-2 leading-8 pb-10 whitespace-pre-line">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-            quae dicta voluptate fuga qui maiores dignissimos illo, vel
-            voluptatem at minus, tempora consequatur optio nesciunt commodi nam
-            ratione. Dicta, possimus?
-          </p>
-          <p className="text-[18px] py-2 leading-8 pb-10 whitespace-pre-line">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-            quae dicta voluptate fuga qui maiores dignissimos illo, vel
-            voluptatem at minus, tempora consequatur optio nesciunt commodi nam
-            ratione. Dicta, possimus?
-          </p>
+         
         </>
       ) : null}
 
@@ -249,15 +236,15 @@ const ProductDetailsInfo = ({ data }) => {
         <div className="w-full 800px:flex p-5">
           <div className="w-full 800px:w-[50%]">
             <div className="flex items-center">
-              <img src={data.shop.shop_avatar.url} className="w-[50px] h-[50px] rounded-full mr-2" alt="" />
+              <img src={`${backend_Url}${data.shop.avatar}`}  className="w-[50px] h-[50px] rounded-full mr-2" alt="" />
               <div className="pl-2">
                 <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                <h5 className="pb-2 text-[15px]">({data.shop.ratings}) Ratings</h5>
+                <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
               </div>
 
             </div>
               <p className="pt-2">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta voluptates maxime dicta accusamus fugit earum perspiciatis nisi velit enim nihil reprehenderit, ab blanditiis dolor ut quod voluptatum dolorum! Maxime, reprehenderit!
+                {data.shop.description}
               </p>
                 
           </div>
@@ -265,8 +252,8 @@ const ProductDetailsInfo = ({ data }) => {
 
           <div className="w-full 800px:w-[50%] mt-5 800px:mt-0  800px:flex flex-col items-end">
             <div className="text-left">
-              <h5 className="font-[600]">Joined on:<span className="font-[500]">2 March 2024</span></h5>
-              <h5 className="font-[600] pt-3">Total Products:<span className="font-[500]">1023</span></h5>
+              <h5 className="font-[600]">Joined on:{" "} <span className="font-[500]">{data.shop?.createdAt?.slice(0,10) }</span></h5>
+              <h5 className="font-[600] pt-3">Total Products: {" "}<span className="font-[500]">{products && products.length}</span></h5>
               <h5 className="font-[600] pt-3">Total Reviews:<span className="font-[500]">234</span></h5>
               <Link to="/">
                 <div className={`${styles.button} !rounded-[4px] !h-[40px] mt-4`}>

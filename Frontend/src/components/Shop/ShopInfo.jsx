@@ -75,7 +75,7 @@ useEffect(()=>{
       </div>
       <div className="p-3">
         <h5 className="font-[600]">Joined on</h5>
-        {/* <h4 className="text-[#000000a6]">{data.createdAt.slice(0, 10)}</h4> */}
+        <h4 className="text-[#000000a6]">{data?.createdAt?.slice(0, 10)}</h4>
       </div>
       {isOwner && (
         <div className="px-4 py-3">

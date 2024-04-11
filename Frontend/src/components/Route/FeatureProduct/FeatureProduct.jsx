@@ -48,7 +48,7 @@ import { useSelector } from 'react-redux';
 
 const FeatureProduct = () => {
     const { allProducts } = useSelector((state) => state.products);
-    console.log("All Products:", allProducts); // Log the value of allProduct
+    // console.log("All Products:", allProducts); // Log the value of allProduct
 
     return (
         <div>

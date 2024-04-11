@@ -20,7 +20,7 @@ router.post('/create-product', upload.array("images"),catchAsyncError(async(req,
             const imageUrls = files.map((file)=> `${file.filename}`);
             const productData =req.body;
             productData.images = imageUrls;
-            productData.shop = shopId;
+            productData.shop = shop;
 
             const product = await Product.create(productData);
             res.status(200).json({

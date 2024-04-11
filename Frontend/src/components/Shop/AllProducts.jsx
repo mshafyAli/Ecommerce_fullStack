@@ -20,6 +20,7 @@ const AllProducts = () => {
 
     useEffect(() => {
         dispatch(getAllProducts(seller._id));
+        console.log("Product is deleting");
     },[dispatch])
 
    
