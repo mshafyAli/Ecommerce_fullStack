@@ -7,6 +7,7 @@ import Store from "./redux/store.js";
 import { LoadUser } from "./redux/actions/user.js";
 import { LoadSeller }  from "./redux/actions/user.js";
 import { getAllProducts } from "./redux/actions/product.js";
+import { getAllEvents } from "./redux/actions/event.js";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import SellerProtectedRoute from './routes/SellerProtectdedRoute.jsx';
@@ -35,6 +36,7 @@ const App = () => {
     Store.dispatch(LoadUser());
     Store.dispatch(LoadSeller());
     Store.dispatch(getAllProducts())
+    Store.dispatch(getAllEvents())
     
 
 

@@ -18,9 +18,11 @@ import NavBar from "./NavBar";
 import Cart from "../Cart/Cart";
 import WishList from "../WishList/WishList";
 import { RxCross1 } from "react-icons/rx";
+import backend_Url from "../../backend_Url.js";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { allProducts } = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
@@ -36,8 +38,8 @@ const Header = ({ activeHeading }) => {
     setSearchTerm(term);
 
     const filteredData =
-      productData &&
-      productData.filter((product) =>
+      allProducts &&
+      allProducts.filter((product) =>
         product.name.toLowerCase().includes(term.toLowerCase())
       );
     setSearchData(filteredData);
@@ -87,7 +89,7 @@ const Header = ({ activeHeading }) => {
                       <Link to={`/product/${product_name}`} key={index}>
                         <div className="w-full flex items-start py-3">
                           <img
-                            src={i.image_Url[0].url}
+                            src={`${backend_Url}${i.images[0]}`}
                             alt=""
                             className="w-[40px] h-[40px] mr-10"
                           />

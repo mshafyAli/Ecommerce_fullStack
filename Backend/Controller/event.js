@@ -21,7 +21,7 @@ router.post('/create-event', upload.array("images"),catchAsyncError(async(req,re
             const imageUrls = files.map((file)=> `${file.filename}`);
             const productEvent =req.body;
             productEvent.images = imageUrls;
-            productEvent.shop = shopId;
+            productEvent.shop = shop;
 
             const product = await Event.create(productEvent);
             res.status(200).json({
@@ -30,6 +30,25 @@ router.post('/create-event', upload.array("images"),catchAsyncError(async(req,re
                 product,
             })
         }
+    }catch(err){
+        return next(new errorHandler(err, 400));
+    }
+}))
+
+
+
+
+//Get All Events
+
+router.get('/get-all-events', catchAsyncError(async(req, res, next) => {
+    try{
+        const events = await Event.find();
+        res.status(200).json({
+            success: true,
+            message: "Events fetched successfully!",
+            events,
+        })
+
     }catch(err){
         return next(new errorHandler(err, 400));
     }

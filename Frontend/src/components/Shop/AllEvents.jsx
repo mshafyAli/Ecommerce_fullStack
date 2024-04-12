@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core'
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { Link } from 'react-router-dom';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
-import { deleteEvents, getAllEvents } from '../../redux/actions/event';
+import { deleteEvents, getAllEventShop } from '../../redux/actions/event';
 
 const AllEvents = () => {
 
@@ -20,7 +20,7 @@ const AllEvents = () => {
 
 
     useEffect(() => {
-        dispatch(getAllEvents(seller._id));
+        dispatch(getAllEventShop(seller._id));
     },[dispatch])
 
    

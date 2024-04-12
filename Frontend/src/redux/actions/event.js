@@ -27,9 +27,38 @@ export const createEvent = (newForm) => async (dispactch) => {
   }
 };
 
-//get all Products
 
-export const getAllEvents = (id) => async (dispatch) => {
+
+
+// get All Events 
+export const getAllEvents = () => async (dispatch) => {
+  try {
+    dispatch({
+        type:"getAllEventsRequest"
+    })
+
+    const {data} = await axios.get(`${baseUrl}/event/get-all-events`)
+
+    dispatch({
+        type:"getAllEventsSuccess",
+        payload:data.events,
+    })
+
+
+  } catch (error) {
+    dispatch({
+        type:"getAllEventsFail",
+        payload:error.response.data.message,
+    })
+  }
+}
+
+
+
+
+//get all Events Of Shop
+
+export const getAllEventShop = (id) => async (dispatch) => {
   try {
     dispatch({
         type:"getAlleventsShopRequest"

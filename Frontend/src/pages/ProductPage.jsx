@@ -4,25 +4,28 @@ import { useSearchParams } from 'react-router-dom'
 import styles from '../styles/styles';
 import { productData } from '../static/data';
 import ProductCard from '../components/Route/ProductCard/ProductCard';
+import  { useSelector } from 'react-redux';
 
 const ProductPage = () => {
 
     const [searchParams] = useSearchParams();
     const categoryData = searchParams.get('category');
     const [data,setData] = useState([]);
+    const { allProducts } = useSelector((state) => state.products);
 
 
     useEffect(() => {
         if(categoryData === null){
-            const d = productData && productData.sort((a,b)=>a.total_sell -b.total_sell);
+            const d = allProducts && allProducts.sort((a,b)=>a.sold_out
+            -b.sold_out);
             setData(d);
         } else{
-            const d = productData && productData.filter(item => item.category === categoryData);
+            const d = allProducts && allProducts.filter(item => item.category === categoryData);
             setData(d);
 
         }
         // window.scrollTo(0,0);
-    },[])
+    },[allProducts])
 
 
 
@@ -42,7 +45,7 @@ const ProductPage = () => {
 
         </div>
         {
-            data.length === 0 && <h1 className='text-center text-[20px]  pb-[100px]'>No Product Found!</h1>
+           data && data.length === 0 && <h1 className='text-center text-[20px]  pb-[100px]'>No Product Found!</h1>
         }
 
     </div>

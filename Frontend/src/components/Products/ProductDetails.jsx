@@ -136,18 +136,20 @@ const ProductDetails = ({ data }) => {
                 </div>
 
                 <div className="flex items-center ">
-              
+                <Link to={`/shop/preview/${data?.shop._id}`}>
                   <img
                     src={`${backend_Url}${data.shop.avatar}`}
                     className="w-[50px] h-[50px] rounded-full mr-2"
                     alt=""
                   />
-                  
+                  </Link>
 
                   <div className="pr-8">
-                    <h3 className={`${styles.shop_name} pb-1 pt-1`}>
-                      {data.shop.name}
-                    </h3>
+                  <Link to={`/shop/preview/${data?.shop._id}`}>
+                      <h3 className={`${styles.shop_name} pb-1 pt-1`}>
+                        {data.shop.name}
+                      </h3>
+                    </Link>
                     <h5 className="text-[15px] pb-3">
                       (4/5) Ratings
                     </h5>
@@ -235,6 +237,7 @@ const ProductDetailsInfo = ({ data,products }) => {
       {active === 3 && (
         <div className="w-full 800px:flex p-5">
           <div className="w-full 800px:w-[50%]">
+          <Link to={`/shop/preview/${data?.shop._id}`}>
             <div className="flex items-center">
               <img src={`${backend_Url}${data.shop.avatar}`}  className="w-[50px] h-[50px] rounded-full mr-2" alt="" />
               <div className="pl-2">
@@ -243,6 +246,7 @@ const ProductDetailsInfo = ({ data,products }) => {
               </div>
 
             </div>
+            </Link>
               <p className="pt-2">
                 {data.shop.description}
               </p>
