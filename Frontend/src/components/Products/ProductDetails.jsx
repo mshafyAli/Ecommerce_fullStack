@@ -11,8 +11,12 @@ import { getAllProductsShop } from '../../redux/actions/product'
 import backend_Url from "../../backend_Url";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { addTocart } from "../../redux/actions/cart";
+
 
 const ProductDetails = ({ data }) => {
+  const { cart } = useSelector((state) => state.cart);
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
@@ -37,6 +41,17 @@ const ProductDetails = ({ data }) => {
     }
   };
 
+  const addToCartHandler = (id) => {
+    console.log("cart",cart)
+   const isItemExists = cart && cart.find((i) => i._id === id);
+    if (isItemExists) {
+      toast.error("Item already in cart!");
+  }else{
+    const cartData = {...data,qty:count}
+    dispatch(addTocart(cartData));
+    toast.success("Item added to cart!");
+  }
+  }
   const handleMessageSubmit = () => {
     navigate("/inbox?conversionjdkfdjdjd");
   };
@@ -127,7 +142,7 @@ const ProductDetails = ({ data }) => {
                 </div>
 
                 <div
-                  className={`${styles.button} flex items-center !rounded !h-11 mt-6 `}
+                  className={`${styles.button} flex items-center !rounded !h-11 mt-6 `} onClick={() => addToCartHandler(data._id)}
                 >
                   <span className="text-white flex items-center">
                     Add to Cart
