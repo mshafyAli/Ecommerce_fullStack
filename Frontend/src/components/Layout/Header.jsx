@@ -22,6 +22,7 @@ import backend_Url from "../../backend_Url.js";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
   const { allProducts } = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
@@ -162,7 +163,7 @@ const Header = ({ activeHeading }) => {
               >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
-                  0
+                  {wishlist && wishlist.length}
                 </span>
               </div>
             </div>
@@ -250,7 +251,7 @@ const Header = ({ activeHeading }) => {
                   <div className="relative mt-5">
                     <AiOutlineHeart size={30} />
                     <span className="absolute top-0 right-0 bg-[#3bc177] rounded-full w-4 h-4 p-0 m-0 text-[12px] text-white text-center font-mono leading-tight">
-                      0
+                    {wishlist && wishlist.length}
                     </span>
                   </div>
                 </div>

@@ -3,30 +3,39 @@ import { RxCross1 } from "react-icons/rx";
 import { BsCartPlus } from "react-icons/bs";
 import styles from "../../styles/styles";
 import { AiOutlineHeart } from "react-icons/ai";
+import { removeFromWishlist } from "../../redux/actions/wishlist";
+import { addTocart } from "../../redux/actions/cart";
+import { useDispatch, useSelector } from "react-redux";
+import backend_Url from "../../backend_Url";
 
 const WishList = ({ setOpenWishList }) => {
-  const cartData = [
-    {
-      name: "Iphone 14 pro max pro max 256 gb ssd and 8gb silver colour",
-      description: "test",
-      price: 1000,
-    },
-    {
-      name: "Iphone 14 pro max pro max 256 gb ssd and 8gb silver colour",
-      description: "test",
-      price: 2000,
-    },
-    {
-      name: "Iphone 14 pro max pro max 256 gb ssd and 8gb silver colour",
-      description: "test",
-      price: 3000,
-    },
-  ];
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const dispatch = useDispatch();
+
+  const removeFromWishlistHandler = (data) => {
+    dispatch(removeFromWishlist(data));
+  };
+
+  const addToCartHandler = (data) => {
+    const newData = {...data, qty:1};
+    dispatch(addTocart(newData));
+    setOpenWishList(false);
+  }
+  
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
       <div className="fixed top-0 right-0 min-h-full w-[25%] bg-white flex flex-col justify-between shadow-sm">
-        <div>
+        {wishlist && wishlist.length === 0 ? (<div className="w-full h-screen flex items-center justify-center">
+            <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
+              <RxCross1
+                size={25}
+                className="cursor-pointer"
+                onClick={() => (false)}
+              />
+            </div>
+            <h5>Wishlist Items is empty!</h5>
+          </div>):(<><div>
           <div className="flex w-full justify-end pt-5 pr-5">
             <RxCross1
               size={25}
@@ -38,34 +47,35 @@ const WishList = ({ setOpenWishList }) => {
           {/* Item length */}
           <div className={`${styles.noramlFlex} p-4`}>
             <AiOutlineHeart size={25} />
-            <h1 className="text-[20px] font-[500] pl-2">3 items</h1>
+            <h1 className="text-[20px] font-[500] pl-2">{wishlist && wishlist.length} items</h1>
           </div>
 
           <br />
 
           {/* Cart Single Item */}
           <div className="w-full border-t">
-            {cartData &&
-              cartData.map((i, index) => <CardSingle key={index} data={i} />)}
+            {wishlist &&
+              wishlist.map((i, index) => <CardSingle key={index} data={i} removeFromWishlistHandler={removeFromWishlistHandler} addToCartHandler={addToCartHandler} />)}
           </div>
         </div>
+        </>)}
       </div>
     </div>
   );
 };
 
-const CardSingle = ({ data }) => {
+const CardSingle = ({ data,removeFromWishlistHandler,addToCartHandler }) => {
   const [value, setValue] = useState(1);
-  const totalPrice = value * data.price;
+  const totalPrice = value * data.discountPrice;
 
   return (
     <div className="border-b p-4">
       <div className="w-full flex items-center ">
-        <RxCross1 className="cursor-pointer" />
+        <RxCross1 className="cursor-pointer"  onClick={() => removeFromWishlistHandler(data)} />
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdx-g3PbxGmAQry6pTbmBHFm_ADz6ygYZWxQ&usqp=CAU"
+          src={`${backend_Url}${data.images[0]}`}
           alt=""
-          className="w-[80px] h-[80px] ml-2"
+          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
         />
         <div className="pl-[5px]">
           <h1>{data.name}</h1>
@@ -74,7 +84,7 @@ const CardSingle = ({ data }) => {
           </h4>
         </div>
       <div>
-      <BsCartPlus size={25} className="cursor-pointer" title="Add to Cart"/>
+      <BsCartPlus size={25} className="cursor-pointer" title="Add to Cart" onClick={() => addToCartHandler(data)}/>
       </div>
       </div>
     </div>

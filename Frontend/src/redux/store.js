@@ -4,6 +4,7 @@ import { sellerReducer } from "./reducers/seller.js";
 import { eventReducer } from "./reducers/event.js";
 import { productReducer } from "./reducers/product.js";
 import { cartReducer } from "./reducers/cart.js";
+import { wishlistReducer } from "./reducers/wishlist.js";
 
 
 
@@ -15,6 +16,8 @@ const store = configureStore({
         products:productReducer,
         events:eventReducer,
         cart:cartReducer,
+        wishlist:wishlistReducer,
+
     },
 });
 
