@@ -43,3 +43,51 @@ export const LoadSeller = () => async (dispatch) => {
   }
 };
 
+
+// user update information
+export const updateUserInformation =
+  (name, email, phoneNumber, password) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updateUserInfoRequest",
+      });
+
+      const { data } = await axios.put(
+        `${baseUrl}/user/update-user-info`,
+        {
+          email,
+          password,
+          phoneNumber,
+          name,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Credentials": true,
+          },
+        }
+      );
+
+      dispatch({
+        type: "updateUserInfoSuccess",
+        payload: data.user,
+      });
+    } catch (error) {
+      let errorMessage;
+      if (error.response && error.response.status === 400) {
+        // User not found error
+        errorMessage = "User not found";
+      } else {
+        // Other errors
+        errorMessage = error.response.data.message || "An error occurred";
+      }
+
+
+      dispatch({
+        type: "updateUserInfoFailed",
+        payload: errorMessage,
+        
+      });
+    }
+  };
+

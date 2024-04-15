@@ -174,6 +174,70 @@ router.get("/logout", (req, res) => {
   });
 });
 
+
+
+// update user info
+
+router.put("/update-user-info",isAuthenticatedUser,catchAsyncError(async(req, res, next)=>{
+  try {
+    const { email, password, phoneNumber, name } = req.body;
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return next(new errorHandler("User not found", 400));
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+
+    if (!isPasswordValid) {
+      return next(
+        new errorHandler("Please provide the correct information", 400)
+      );
+    }
+
+    user.name = name;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+
+    await user.save();
+
+    res.status(201).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    return next(new errorHandler(error.message, 500));
+  }
+}))
+
+
+// update user avatar
+
+router.put("/update-avatar",isAuthenticatedUser,upload.single("image"),catchAsyncError(async(req, res, next)=>{
+  try{
+    const existUser = await User.findById(req.user.id);
+    const existAvatarPath = `uploads/${existUser.avatar}`;
+    fs.unlinkSync(existAvatarPath);
+    const fileUrl = path.join(req.file.filename);
+
+    const user = await User.findByIdAndUpdate(req.user.id, {
+      avatar: fileUrl,
+    })
+
+    res.status(201).json({
+      success: true,
+      user,
+    })
+
+  }catch(err){
+    return next(new errorHandler(err.message), 500);
+  }
+
+  
+}))
+
+
 export default router;
 
 
