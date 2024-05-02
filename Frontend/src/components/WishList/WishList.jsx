@@ -31,7 +31,7 @@ const WishList = ({ setOpenWishList }) => {
               <RxCross1
                 size={25}
                 className="cursor-pointer"
-                onClick={() => (false)}
+                onClick={() => setOpenWishList(false)}
               />
             </div>
             <h5>Wishlist Items is empty!</h5>
